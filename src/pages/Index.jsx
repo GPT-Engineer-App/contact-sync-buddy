@@ -3,6 +3,7 @@ import { Container, Button, VStack, Text, HStack, Box } from "@chakra-ui/react";
 import { FaVideo, FaVideoSlash } from "react-icons/fa";
 import io from "socket.io-client";
 import Peer from "simple-peer";
+import Layout from "../components/Layout";
 
 const Index = () => {
   const [stream, setStream] = useState(null);
@@ -91,35 +92,37 @@ const Index = () => {
   };
 
   return (
-    <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <VStack spacing={4}>
-        <Text fontSize="2xl">Video Calling App</Text>
-        <Box>
-          {stream && <video playsInline muted ref={myVideo} autoPlay style={{ width: "300px" }} />}
-        </Box>
-        <Box>
-          {callAccepted && !callEnded ? (
-            <video playsInline ref={userVideo} autoPlay style={{ width: "300px" }} />
-          ) : null}
-        </Box>
-        <HStack spacing={4}>
-          {callAccepted && !callEnded ? (
-            <Button onClick={leaveCall} colorScheme="red" leftIcon={<FaVideoSlash />}>
-              End Call
-            </Button>
-          ) : (
-            <Button onClick={() => callUser(id)} colorScheme="teal" leftIcon={<FaVideo />}>
-              Call
-            </Button>
-          )}
-          {receivingCall && !callAccepted ? (
-            <Button onClick={answerCall} colorScheme="green" leftIcon={<FaVideo />}>
-              Answer
-            </Button>
-          ) : null}
-        </HStack>
-      </VStack>
-    </Container>
+    <Layout>
+      <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+        <VStack spacing={4}>
+          <Text fontSize="2xl">Video Calling App</Text>
+          <Box>
+            {stream && <video playsInline muted ref={myVideo} autoPlay style={{ width: "300px" }} />}
+          </Box>
+          <Box>
+            {callAccepted && !callEnded ? (
+              <video playsInline ref={userVideo} autoPlay style={{ width: "300px" }} />
+            ) : null}
+          </Box>
+          <HStack spacing={4}>
+            {callAccepted && !callEnded ? (
+              <Button onClick={leaveCall} colorScheme="red" leftIcon={<FaVideoSlash />}>
+                End Call
+              </Button>
+            ) : (
+              <Button onClick={() => callUser(id)} colorScheme="teal" leftIcon={<FaVideo />}>
+                Call
+              </Button>
+            )}
+            {receivingCall && !callAccepted ? (
+              <Button onClick={answerCall} colorScheme="green" leftIcon={<FaVideo />}>
+                Answer
+              </Button>
+            ) : null}
+          </HStack>
+        </VStack>
+      </Container>
+    </Layout>
   );
 };
 

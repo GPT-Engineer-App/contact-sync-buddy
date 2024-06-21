@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Layout from "../components/Layout";
 import { Container, Button, VStack, HStack, Input, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import { FaPlus, FaEdit, FaTrash, FaFileExport, FaFileImport } from "react-icons/fa";
 import Papa from "papaparse";
@@ -66,71 +67,73 @@ const Contacts = () => {
   };
 
   return (
-    <Container centerContent maxW="container.md" py={8}>
-      <VStack spacing={4} width="100%">
-        <HStack spacing={4} width="100%">
-          <Input
-            placeholder="Name"
-            name="name"
-            value={newContact.name}
-            onChange={handleInputChange}
-          />
-          <Input
-            placeholder="Email"
-            name="email"
-            value={newContact.email}
-            onChange={handleInputChange}
-          />
-          <Input
-            placeholder="Phone"
-            name="phone"
-            value={newContact.phone}
-            onChange={handleInputChange}
-          />
-          <Button onClick={handleAddContact} colorScheme="teal" leftIcon={<FaPlus />}>
-            {editingIndex !== null ? "Update" : "Add"}
-          </Button>
-        </HStack>
-        <Table variant="simple" width="100%">
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th>Email</Th>
-              <Th>Phone</Th>
-              <Th>Actions</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {contacts.map((contact, index) => (
-              <Tr key={index}>
-                <Td>{contact.name}</Td>
-                <Td>{contact.email}</Td>
-                <Td>{contact.phone}</Td>
-                <Td>
-                  <HStack spacing={2}>
-                    <Button size="sm" onClick={() => handleEditContact(index)} leftIcon={<FaEdit />}>
-                      Edit
-                    </Button>
-                    <Button size="sm" onClick={() => handleDeleteContact(index)} colorScheme="red" leftIcon={<FaTrash />}>
-                      Delete
-                    </Button>
-                  </HStack>
-                </Td>
+    <Layout>
+      <Container centerContent maxW="container.md" py={8}>
+        <VStack spacing={4} width="100%">
+          <HStack spacing={4} width="100%">
+            <Input
+              placeholder="Name"
+              name="name"
+              value={newContact.name}
+              onChange={handleInputChange}
+            />
+            <Input
+              placeholder="Email"
+              name="email"
+              value={newContact.email}
+              onChange={handleInputChange}
+            />
+            <Input
+              placeholder="Phone"
+              name="phone"
+              value={newContact.phone}
+              onChange={handleInputChange}
+            />
+            <Button onClick={handleAddContact} colorScheme="teal" leftIcon={<FaPlus />}>
+              {editingIndex !== null ? "Update" : "Add"}
+            </Button>
+          </HStack>
+          <Table variant="simple" width="100%">
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Email</Th>
+                <Th>Phone</Th>
+                <Th>Actions</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
-        <HStack spacing={4} width="100%">
-          <Button onClick={handleExportCSV} colorScheme="blue" leftIcon={<FaFileExport />}>
-            Export CSV
-          </Button>
-          <Button as="label" colorScheme="green" leftIcon={<FaFileImport />}>
-            Import CSV
-            <Input type="file" accept=".csv" onChange={handleImportCSV} hidden />
-          </Button>
-        </HStack>
-      </VStack>
-    </Container>
+            </Thead>
+            <Tbody>
+              {contacts.map((contact, index) => (
+                <Tr key={index}>
+                  <Td>{contact.name}</Td>
+                  <Td>{contact.email}</Td>
+                  <Td>{contact.phone}</Td>
+                  <Td>
+                    <HStack spacing={2}>
+                      <Button size="sm" onClick={() => handleEditContact(index)} leftIcon={<FaEdit />}>
+                        Edit
+                      </Button>
+                      <Button size="sm" onClick={() => handleDeleteContact(index)} colorScheme="red" leftIcon={<FaTrash />}>
+                        Delete
+                      </Button>
+                    </HStack>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+          <HStack spacing={4} width="100%">
+            <Button onClick={handleExportCSV} colorScheme="blue" leftIcon={<FaFileExport />}>
+              Export CSV
+            </Button>
+            <Button as="label" colorScheme="green" leftIcon={<FaFileImport />}>
+              Import CSV
+              <Input type="file" accept=".csv" onChange={handleImportCSV} hidden />
+            </Button>
+          </HStack>
+        </VStack>
+      </Container>
+    </Layout>
   );
 };
 
