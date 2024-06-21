@@ -23,6 +23,14 @@ const Index = () => {
   const connectionRef = useRef();
   const socket = useRef();
 
+  const fetchCallHistoryFromServer = async () => {
+    // Mock implementation for fetching call history
+    return [
+      { name: "John Doe", duration: 10 },
+      { name: "Jane Smith", duration: 15 },
+    ];
+  };
+
   useEffect(() => {
     socket.current = io.connect("/");
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
