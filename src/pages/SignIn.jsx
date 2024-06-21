@@ -40,6 +40,9 @@ const SignIn = () => {
         <Button onClick={handleSignIn} colorScheme="teal" width="100%">
           Sign In
         </Button>
+        <Text color="teal.500" cursor="pointer" onClick={() => navigate('/forgot-password')}>
+          Forgot Password?
+        </Text>
       </VStack>
     </Container>
   );
