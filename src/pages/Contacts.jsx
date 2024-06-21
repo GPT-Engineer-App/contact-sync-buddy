@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
-import { Container, Button, VStack, HStack, Input, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+import { Container, Button, VStack, HStack, Input, Table, Thead, Tbody, Tr, Th, Td, Select, Text } from "@chakra-ui/react";
 import { FaPlus, FaEdit, FaTrash, FaFileExport, FaFileImport } from "react-icons/fa";
 import Papa from "papaparse";
 import { useAuth } from "../contexts/AuthContext";
@@ -9,11 +9,31 @@ const Contacts = () => {
   const [contacts, setContacts] = useState([]);
   const [newContact, setNewContact] = useState({ name: "", email: "", phone: "" });
   const [editingIndex, setEditingIndex] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [filter, setFilter] = useState("");
+  const [suggestedContacts, setSuggestedContacts] = useState([]);
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    const storedContacts = JSON.parse(localStorage.getItem("contacts")) || [];
+    let storedContacts = JSON.parse(localStorage.getItem("contacts")) || [];
+    if (filter) {
+      storedContacts = storedContacts.filter(contact => contact.name.includes(filter) || contact.email.includes(filter) || contact.phone.includes(filter));
+    }
+    if (sortOrder === "asc") {
+      storedContacts.sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+      storedContacts.sort((a, b) => b.name.localeCompare(a.name));
+    }
     setContacts(storedContacts);
+  }, [filter, sortOrder]);
+
+  useEffect(() => {
+    const fetchSuggestedContacts = async () => {
+      // Logic to fetch suggested contacts from the server
+      const suggestions = await fetchSuggestedContactsFromServer();
+      setSuggestedContacts(suggestions);
+    };
+    fetchSuggestedContacts();
   }, []);
 
   const handleInputChange = (e) => {
@@ -95,6 +115,17 @@ const Contacts = () => {
               {editingIndex !== null ? "Update" : "Add"}
             </Button>
           </HStack>
+          <HStack spacing={4} width="100%">
+            <Input
+              placeholder="Filter"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+            />
+            <Select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </Select>
+          </HStack>
           <Table variant="simple" width="100%">
             <Thead>
               <Tr>
@@ -133,6 +164,11 @@ const Contacts = () => {
               <Input type="file" accept=".csv" onChange={handleImportCSV} hidden />
             </Button>
           </HStack>
+          <VStack spacing={4}>
+            {suggestedContacts.map((contact, index) => (
+              <Text key={index}>{contact.name}</Text>
+            ))}
+          </VStack>
         </VStack>
       </Container>
     </Layout>
