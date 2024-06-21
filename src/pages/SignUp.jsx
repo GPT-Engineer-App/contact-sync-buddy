@@ -3,12 +3,14 @@ import { Container, Button, VStack, Input, Heading, Text } from "@chakra-ui/reac
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   const handleSignUp = async () => {
     try {

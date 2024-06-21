@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Button, VStack, Input, Heading, Text } from "@chakra-ui/react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
@@ -9,6 +10,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   const handleSignIn = async () => {
     try {

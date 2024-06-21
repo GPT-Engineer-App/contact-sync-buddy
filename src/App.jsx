@@ -3,6 +3,8 @@ import Index from "./pages/Index.jsx";
 import Contacts from "./pages/Contacts.jsx";
 import SignIn from "./pages/SignIn.jsx";
 import SignUp from "./pages/SignUp.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
       </Routes>
     </Router>
   );
