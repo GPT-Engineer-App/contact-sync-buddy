@@ -37,7 +37,7 @@ const SignIn = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button onClick={handleSignIn} colorScheme="teal" width="100%">
+        <Button onClick={handleSignIn} colorScheme="blue" width="100%">
           Sign In
         </Button>
       </VStack>
