@@ -2,7 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
+import { TenantProvider } from "./contexts/TenantContext.jsx";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { RoleProvider } from "./contexts/RoleContext.jsx";
 
 const colors = {
   brand: {
@@ -18,7 +20,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <AuthProvider>
-        <App />
+        <TenantProvider>
+          <RoleProvider>
+            <App />
+          </RoleProvider>
+        </TenantProvider>
       </AuthProvider>
     </ChakraProvider>
   </React.StrictMode>

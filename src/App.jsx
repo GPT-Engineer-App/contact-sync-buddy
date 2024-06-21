@@ -4,6 +4,8 @@ import Contacts from "./pages/Contacts.jsx";
 import SignIn from "./pages/SignIn.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import Feedback from "./pages/Feedback.jsx";
+import Admin from "./pages/Admin.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/feedback" element={<PrivateRoute><Feedback /></PrivateRoute>} />
+        <Route path="/admin" element={<PrivateRoute><Admin /></PrivateRoute>} />
       </Routes>
     </Router>
   );
