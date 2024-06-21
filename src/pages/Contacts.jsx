@@ -3,11 +3,13 @@ import Layout from "../components/Layout";
 import { Container, Button, VStack, HStack, Input, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import { FaPlus, FaEdit, FaTrash, FaFileExport, FaFileImport } from "react-icons/fa";
 import Papa from "papaparse";
+import { useAuth } from "../contexts/AuthContext";
 
 const Contacts = () => {
   const [contacts, setContacts] = useState([]);
   const [newContact, setNewContact] = useState({ name: "", email: "", phone: "" });
   const [editingIndex, setEditingIndex] = useState(null);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const storedContacts = JSON.parse(localStorage.getItem("contacts")) || [];

@@ -3,9 +3,12 @@ import { Box, Flex, Heading, Spacer, Button } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { useAuth } from "../contexts/AuthContext";
 
 const Layout = ({ children }) => {
   const navigate = useNavigate();
+
+  const { currentUser } = useAuth();
 
   const handleSignOut = async () => {
     await signOut(auth);
@@ -19,9 +22,25 @@ const Layout = ({ children }) => {
           <Link to="/">MyApp</Link>
         </Heading>
         <Spacer />
-        <Button variant="ghost" onClick={handleSignOut}>
-          Sign Out
-        </Button>
+        {currentUser ? (
+          <>
+            <Button variant="ghost" as={Link} to="/dashboard">
+              Dashboard
+            </Button>
+            <Button variant="ghost" onClick={handleSignOut}>
+              Sign Out
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button variant="ghost" as={Link} to="/signin">
+              Sign In
+            </Button>
+            <Button variant="ghost" as={Link} to="/signup">
+              Sign Up
+            </Button>
+          </>
+        )}
       </Flex>
       <Box p={4}>{children}</Box>
     </Box>

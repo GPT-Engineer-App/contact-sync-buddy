@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import { Container, Button, VStack, Text, HStack, Box } from "@chakra-ui/react";
 import { FaVideo, FaVideoSlash } from "react-icons/fa";
 import io from "socket.io-client";
@@ -14,6 +15,7 @@ const Index = () => {
   const [id, setId] = useState("");
   const [callEnded, setCallEnded] = useState(false);
   const [name, setName] = useState("");
+  const { currentUser } = useAuth();
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
