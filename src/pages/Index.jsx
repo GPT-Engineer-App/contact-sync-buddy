@@ -15,11 +15,21 @@ const Index = () => {
   const [id, setId] = useState("");
   const [callEnded, setCallEnded] = useState(false);
   const [name, setName] = useState("");
+  const [missedCalls, setMissedCalls] = useState([]);
+  const [callHistory, setCallHistory] = useState([]);
   const { currentUser } = useAuth();
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
   const socket = useRef();
+
+  const fetchCallHistoryFromServer = async () => {
+    // Mock implementation for fetching call history
+    return [
+      { name: "John Doe", duration: 10 },
+      { name: "Jane Smith", duration: 15 },
+    ];
+  };
 
   useEffect(() => {
     socket.current = io.connect("/");
@@ -38,6 +48,18 @@ const Index = () => {
       setName(data.name);
       setCallerSignal(data.signal);
     });
+
+    socket.current.on("missedCall", (data) => {
+      setMissedCalls(prev => [...prev, data]);
+      // Logic to send email notification
+    });
+
+    const fetchCallHistory = async () => {
+      // Logic to fetch call history from the server
+      const history = await fetchCallHistoryFromServer();
+      setCallHistory(history);
+    };
+    fetchCallHistory();
   }, []);
 
   const callUser = (id) => {
@@ -122,6 +144,16 @@ const Index = () => {
               </Button>
             ) : null}
           </HStack>
+          <VStack spacing={4}>
+            {missedCalls.map((call, index) => (
+              <Text key={index} color="red.500">Missed call from {call.name}</Text>
+            ))}
+          </VStack>
+          <VStack spacing={4}>
+            {callHistory.map((call, index) => (
+              <Text key={index}>{call.name} - {call.duration} minutes</Text>
+            ))}
+          </VStack>
         </VStack>
       </Container>
     </Layout>

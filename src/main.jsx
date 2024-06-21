@@ -6,15 +6,17 @@ import { TenantProvider } from "./contexts/TenantContext.jsx";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { RoleProvider } from "./contexts/RoleContext.jsx";
 
-const colors = {
-  brand: {
-    900: "#1a365d",
-    800: "#153e75",
-    700: "#2a69ac",
+const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        bg: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
+        backgroundImage: "url('/path/to/circular-pattern.png')",
+        backgroundSize: "cover",
+      },
+    },
   },
-};
-
-const theme = extendTheme({ colors });
+});
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
